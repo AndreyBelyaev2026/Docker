@@ -60,9 +60,38 @@ mydatabase=# SELECT * FROM employees;
 # Удаляем контейнер pgsql-test-1
 docker rm -f pgsql-test-1
 
+# Повторно проверяем содержимое
+ls -la /home/vasa/data/
+total 132
+drwx------ 19   70 root  4096 May 15 10:19 .
+drwxr-xr-x  3 root root  4096 May 15 09:55 ..
+drwx------  6   70   70  4096 May 15 10:15 base
+drwx------  2   70   70  4096 May 15 10:15 global
+drwx------  2   70   70  4096 May 15 10:12 pg_commit_ts
+drwx------  2   70   70  4096 May 15 10:12 pg_dynshmem
+-rw-------  1   70   70  5753 May 15 10:12 pg_hba.conf
+-rw-------  1   70   70  2681 May 15 10:12 pg_ident.conf
+drwx------  4   70   70  4096 May 15 10:19 pg_logical
+drwx------  4   70   70  4096 May 15 10:12 pg_multixact
+drwx------  2   70   70  4096 May 15 10:12 pg_notify
+drwx------  2   70   70  4096 May 15 10:12 pg_replslot
+drwx------  2   70   70  4096 May 15 10:12 pg_serial
+drwx------  2   70   70  4096 May 15 10:12 pg_snapshots
+drwx------  2   70   70  4096 May 15 10:19 pg_stat
+drwx------  2   70   70  4096 May 15 10:12 pg_stat_tmp
+drwx------  2   70   70  4096 May 15 10:12 pg_subtrans
+drwx------  2   70   70  4096 May 15 10:12 pg_tblspc
+drwx------  2   70   70  4096 May 15 10:12 pg_twophase
+-rw-------  1   70   70     3 May 15 10:12 PG_VERSION
+drwx------  4   70   70  4096 May 15 10:12 pg_wal
+drwx------  2   70   70  4096 May 15 10:12 pg_xact
+-rw-------  1   70   70    88 May 15 10:12 postgresql.auto.conf
+-rw-------  1   70   70 32545 May 15 10:12 postgresql.conf
+-rw-------  1   70   70    24 May 15 10:12 postmaster.opts
+
 --
 # Копируем данные из /home/vasa/data/ в /home/andrey/data/
-cp -R /home/vasa/data/* /home/andrey/data/
+mv /home/vasa/data/* /home/andrey/data/
 
 # Проверяем содержимое
 ls -la /home/andrey/data/
@@ -97,7 +126,7 @@ drwx------  2 root   root    4096 May 15 10:43 pg_xact
 docker run -d --name pgsql-test-2 -v /home/andrey/data/:/data/pg -e POSTGRES_PASSWORD=123456 postgres:18-alpine3.22
 
 # Заходим к докер контейнер
-docker exec -it pgsql-test-1 bash
+docker exec -it pgsql-test-2 bash
 
 # Подключаемся к postgresql
 psql -U postgres -d postgres

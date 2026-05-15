@@ -94,7 +94,7 @@ drwx------  2 root   root    4096 May 15 10:43 pg_xact
 -rw-------  1 root   root      24 May 15 10:43 postmaster.opts
 
 # Создаём докер контейнер pgsql-test-2
-docker run -d --name pgsql-test-2 -v /home/andrey/data/:/var/lib/postgresql/18/docker/ -e POSTGRES_PASSWORD=123456 postgres:18-alpine3.22
+docker run -d --name pgsql-test-2 -v /home/andrey/data/:/data/pg -e POSTGRES_PASSWORD=123456 postgres:18-alpine3.22
 
 # Заходим к докер контейнер
 docker exec -it pgsql-test-1 bash

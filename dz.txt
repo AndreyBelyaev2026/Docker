@@ -1,0 +1,51 @@
+# Создаём докер контейнер pgsql-test-1
+docker run -d --name pgsql-test-1 -v /home/vasa/data/:/var/lib/postgresql/18/docker/ -e POSTGRES_PASSWORD=123456 postgres:18-alpine3.22
+
+# Заходим к докер контейнер
+docker exec -it pgsql-test-1 bash
+
+# Подключаемся к postgresql
+psql -U postgres -d postgres
+
+# Создаём БД mydatabase
+CREATE DATABASE mydatabase;
+
+# Подключаемся к БД
+\connect mydatabase
+
+# Создаём таблицу 
+CREATE TABLE employees (id SERIAL PRIMARY KEY, name VARCHAR(50), age INT);
+
+# Записываем данные в таблицу
+INSERT INTO employees (name, age) VALUES ('Ivan', 30), ('Maria', 28), ('Sergey', 35);
+
+# Проверяем успешность записанных данных
+mydatabase=# SELECT * FROM employees;
+ id |  name  | age
+----+--------+-----
+  1 | Ivan   |  30
+  2 | Maria  |  28
+  3 | Sergey |  35
+(3 rows)
+
+# Удаляем контейнер pgsql-test-1
+docker rm -f pgsql-test-1
+
+---
+# Создаём докер контейнер pgsql-test-2
+docker run -d --name pgsql-test-2 -v /home/andrey/data/:/var/lib/postgresql/18/docker/ -e POSTGRES_PASSWORD=123456 postgres:18-alpine3.22
+
+# Заходим к докер контейнер
+docker exec -it pgsql-test-1 bash
+
+# Подключаемся к postgresql
+psql -U postgres -d postgres
+
+# Проверяем успешность записанных данных
+mydatabase=# SELECT * FROM employees;
+ id |  name  | age
+----+--------+-----
+  1 | Ivan   |  30
+  2 | Maria  |  28
+  3 | Sergey |  35
+(3 rows)

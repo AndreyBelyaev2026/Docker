@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  database:
+    image: postgres:13
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    ports:
+      - "5432:5432"
+    networks:
+      - my-pg-network
+
+volumes:
+  db_data:
+
+networks:
+  my-pg-network:
+    driver: bridge
